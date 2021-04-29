@@ -1,0 +1,9 @@
+{
+    "state":[
+        "UttarPradesh","Rajasthan","MadhyaPradesh"
+    ],
+    "UttarPradesh":["Lucknow","Varanasi","PryagRaj","Ghazipur"],
+    "Rajasthan":["Jaipur","Jodhpur"],
+    "MadhyaPradesh":["Bhopal","Indore"]
+    
+}
