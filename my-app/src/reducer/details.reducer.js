@@ -1,5 +1,5 @@
 import { primaryDetails } from "../state/detail.state";
-import {officialDetails} from "../state/detail.state"
+import { officialDetails } from "../state/detail.state";
 export const primaryReducer = (state = primaryDetails, action) => {
   switch (action.type) {
     case "PRIMARY_DETAILS":

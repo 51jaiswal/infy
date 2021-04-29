@@ -1,11 +1,11 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import Submission from "./Submission";
-import {officialDetails, primaryDetails} from "../action/details.action"
-import PrimaryDetail from "../components/PrimaryDetails"
+import { officialDetails, primaryDetails } from "../action/details.action";
+import PrimaryDetail from "../components/PrimaryDetails";
 class OfficialDetails extends Component {
   state = {
-     primary:this.props.primary, 
+    primary: this.props.primary,
     form: {
       organisationName: "",
       experiance: "",
@@ -17,16 +17,15 @@ class OfficialDetails extends Component {
       experiance: "",
       salary: "",
       age: "",
-     
     },
     formValid: {
       organisationName: false,
       experiance: false,
       salary: false,
       age: false,
-       buttonActive:false
+      buttonActive: false,
     },
-    final:false,
+    final: false,
   };
   handleChange = (e) => {
     const name = e.target.name;
@@ -40,11 +39,13 @@ class OfficialDetails extends Component {
   //    // this.props.history.push("/submit")
   //    this.setState({final:true})
   // }
-  handleClick=()=>{
-    const {organisationName,experiance,salary,age} = this.state.form
-    this.props.dispatch(officialDetails(organisationName,experiance,salary,age))
-    this.setState({final:true})
-  }
+  handleClick = () => {
+    const { organisationName, experiance, salary, age } = this.state.form;
+    this.props.dispatch(
+      officialDetails(organisationName, experiance, salary, age)
+    );
+    this.setState({ final: true });
+  };
   validateField = (name, value) => {
     const { formErrorMessage, formValid } = this.state;
     switch (name) {
@@ -81,12 +82,12 @@ class OfficialDetails extends Component {
           formValid.salary = true;
         }
         break;
-        case "age":
+      case "age":
         if (value === "") {
           formErrorMessage.age = "field required";
           formValid.age = false;
-        } else if (value <= 18 ) {
-          formErrorMessage.age = "come on !!! age must be greater than 18"
+        } else if (value <= 18) {
+          formErrorMessage.age = "come on !!! age must be greater than 18";
           formValid.age = false;
         } else {
           formErrorMessage.age = "";
@@ -96,19 +97,26 @@ class OfficialDetails extends Component {
       default:
         break;
     }
-    formValid.buttonActive=formValid.salary && formValid.experiance &&
-     formValid.age && formValid.organisationName;
-    this.setState({formErrorMessage:formErrorMessage,formValid:formValid})
+    formValid.buttonActive =
+      formValid.salary &&
+      formValid.experiance &&
+      formValid.age &&
+      formValid.organisationName;
+    this.setState({ formErrorMessage: formErrorMessage, formValid: formValid });
   };
   render() {
     const { formErrorMessage, form, formValid } = this.state;
-    if(this.state.final){
-        return (<Submission primary={this.state.primary} finally={this.props}></Submission>)
+    if (this.state.final) {
+      return (
+        <Submission
+          primary={this.state.primary}
+          finally={this.props}
+        ></Submission>
+      );
     }
     return (
       <Fragment>
-        
-          {JSON.stringify(this.state.primary.firstName)}
+        {JSON.stringify(this.state.primary.firstName)}
         <div style={{ padding: "40px" }} className="container-fluid">
           <div className="row">
             <div className="col-md-4 offset-md-4">
@@ -180,10 +188,16 @@ class OfficialDetails extends Component {
                         {formErrorMessage.age}
                       </span>
                     </div>
-                    <button className="btn btn-info" onClick={this.handleClick} disabled={!formValid.buttonActive}>Next</button>
+                    <button
+                      className="btn btn-info"
+                      onClick={this.handleClick}
+                      disabled={!formValid.buttonActive}
+                    >
+                      Next
+                    </button>
                     {/* <button onClick={this.checkOfficial}>click</button> */}
                   </form>
-                  
+
                   {/* <h3>{this.state.primary.firstName}</h3> */}
                 </div>
               </div>
@@ -196,12 +210,12 @@ class OfficialDetails extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-      organisationName:state.officialReducer.orgName,
-      experience:state.officialReducer.experience,
-      salary:state.officialReducer.salary,
-      age:state.officialReducer.age
-  }
-}
+    organisationName: state.officialReducer.orgName,
+    experience: state.officialReducer.experience,
+    salary: state.officialReducer.salary,
+    age: state.officialReducer.age,
+  };
+};
 
 //  connect(mapStateToProps)(PrimaryDetail);
 // export default (OfficialDetails);

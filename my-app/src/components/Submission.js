@@ -5,17 +5,17 @@ class Submission extends Component {
     primary: this.props.primary,
     offical: this.props.finally,
   };
-  handleSubmit=(e)=>{
-    e.preventDefault()
+  handleSubmit = (e) => {
+    e.preventDefault();
     axios
-    .post("http://localhost:3001/primaryData",this.state.primary)
-    .then((res)=>{
-        console.log(res)
-    })
-    .catch(err=>{
-        console.log("hihfi")
-    })
-  }
+      .post("http://localhost:3001/primaryData", this.state.primary)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log("hihfi");
+      });
+  };
   render() {
     return (
       <Fragment>
@@ -127,7 +127,12 @@ class Submission extends Component {
                         disabled={true}
                       />
                     </div>
-                    <button onSubmit={this.handleSubmit} className="btn btn-primary">Submit</button>
+                    <button
+                      onSubmit={this.handleSubmit}
+                      className="btn btn-primary"
+                    >
+                      Submit
+                    </button>
                   </form>
                 </div>
               </div>

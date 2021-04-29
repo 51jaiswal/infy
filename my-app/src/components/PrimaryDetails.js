@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import axios from "axios";
-import { connect } from 'react-redux'
-import {primaryDetails} from "../action/details.action"
+import { connect } from "react-redux";
+import { primaryDetails } from "../action/details.action";
 import OfficialDetails from "./OfficialDetails";
 class PrimaryDetail extends Component {
   state = {
@@ -27,13 +27,12 @@ class PrimaryDetail extends Component {
       stateCheck: false,
       city: false,
       // check:false
-
     },
     states: [],
     city: [],
     statesError: "",
     cityError: "",
-    official:false
+    official: false,
     // check:false
   };
   componentDidMount = () => {
@@ -42,30 +41,35 @@ class PrimaryDetail extends Component {
       .then((res) => {
         console.log(res.data);
         this.setState({ states: res.data });
-       
       })
       .catch((err) => {
         this.setState({ statesError: "there is some error in fetching state" });
       });
   };
-  handleClick=()=>{
-    const {firstName,middleName,lastName,stateCheck,city} = this.state.form
-    this.props.dispatch(primaryDetails(firstName,middleName,lastName,stateCheck,city))
-    this.setState({official:true})
-  }
+  handleClick = () => {
+    const {
+      firstName,
+      middleName,
+      lastName,
+      stateCheck,
+      city,
+    } = this.state.form;
+    this.props.dispatch(
+      primaryDetails(firstName, middleName, lastName, stateCheck, city)
+    );
+    this.setState({ official: true });
+  };
   handlecity = () => {
     if (this.state.form.stateCheck) {
-      //  this.setState({formValid:{check:false}})
+      this.setState({ formValid: { city: false } });
       axios
         .get("http://localhost:3001/" + this.state.form.stateCheck)
         .then((res) => {
           console.log("city", res.data);
           this.setState({ city: res.data });
-
         })
         .catch((err) => {
-        
-          this.setState({ cityError: "there is some error in fecthing city " });
+          this.setState({ cityError: "there is some error in fetching city " });
         });
     }
   };
@@ -77,7 +81,7 @@ class PrimaryDetail extends Component {
     this.setState({ form: newForm });
     this.validateField(name, value);
   };
-  
+
   validateField = (name, value) => {
     const { formErrorMessage, formValid } = this.state;
     switch (name) {
@@ -100,7 +104,7 @@ class PrimaryDetail extends Component {
         } else {
           formErrorMessage.stateCheck = "";
           formValid.stateCheck = true;
-           console.log("after",this.state.formValid.stateCheck)
+          console.log("after", this.state.formValid.stateCheck);
         }
         break;
       case "firstName":
@@ -115,7 +119,7 @@ class PrimaryDetail extends Component {
           formValid.firstName = true;
         }
         break;
-     
+
       case "lastName":
         if (value === "") {
           formErrorMessage.lastName = "Field Required";
@@ -138,7 +142,7 @@ class PrimaryDetail extends Component {
       formValid.lastName &&
       formValid.stateCheck &&
       formValid.city;
-    console.log("final button active",formValid.buttonActive);
+    console.log("final button active", formValid.buttonActive);
     this.setState({ formErrorMessage: formErrorMessage, formValid: formValid });
   };
   // handleSubmit = (e) => {
@@ -148,8 +152,8 @@ class PrimaryDetail extends Component {
   // };
   render() {
     const { form, formErrorMessage, formValid } = this.state;
-    if(this.state.official){
-      return(<OfficialDetails primary={this.props}></OfficialDetails>)
+    if (this.state.official) {
+      return <OfficialDetails primary={this.props}></OfficialDetails>;
       // return(<OfficialDetails primary={this.state.form}></OfficialDetails>)
     }
     return (
@@ -219,7 +223,6 @@ class PrimaryDetail extends Component {
                       </label>
                       <select
                         onChange={(e) => this.handleChange(e)}
-                       
                         onMouseUp={this.handlecity}
                         className="form-control"
                         value={form.stateCheck}
@@ -248,7 +251,6 @@ class PrimaryDetail extends Component {
                         // onClick={this.handlecity}
                         onChange={this.handleChange}
                         className="form-control"
-                        
                         value={form.city}
                         name="city"
                         id="city"
@@ -275,10 +277,10 @@ class PrimaryDetail extends Component {
                     >
                       Next
                     </button>
-                   {/* <button onClick={this.checkName}>click</button> */}
+                    {/* <button onClick={this.checkName}>click</button> */}
                   </form>
-                   
-                    {/* <h3>name:{this.props.name}</h3> */}
+
+                  {/* <h3>name:{this.props.name}</h3> */}
                 </div>
               </div>
             </div>
@@ -289,14 +291,13 @@ class PrimaryDetail extends Component {
   }
 }
 
-
 const mapStateToProps = (state) => {
   return {
-      firstName:state.primaryReducer.firstName,
-      middleName:state.primaryReducer.middleName,
-      lastName:state.primaryReducer.lastName,
-      state:state.primaryReducer.states,
-      city:state.primaryReducer.city
-  }
-}
+    firstName: state.primaryReducer.firstName,
+    middleName: state.primaryReducer.middleName,
+    lastName: state.primaryReducer.lastName,
+    state: state.primaryReducer.states,
+    city: state.primaryReducer.city,
+  };
+};
 export default connect(mapStateToProps)(PrimaryDetail);
